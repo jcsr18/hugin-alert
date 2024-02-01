@@ -9,12 +9,17 @@
   },
   "devDependencies": {
     "@types/node": "^20.11.7",
+    "@types/node-schedule": "^2.1.5",
+    "prisma": "^5.9.0",
     "tsup": "^8.0.1",
     "tsx": "^4.7.0",
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "discord.js": "^14.14.1",
-    "dotenv": "^16.4.1"
+    "@penseapp/discord-notification": "^2.0.9",
+    "@prisma/client": "^5.9.0",
+    "axios": "^1.6.7",
+    "dotenv": "^16.4.1",
+    "node-schedule": "^2.1.1"
   }
 }

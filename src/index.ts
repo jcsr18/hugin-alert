@@ -1,16 +1,8 @@
-import Bot from "@discord/Bot";
-import { MissingDiscordEnvironmentError } from "@errors/MissingDiscordEnvironmentError";
+import { OpportunityCron } from "@hugin-crons/OpportunityCron";
 import dotenv from "dotenv";
 
 dotenv.config();
 
-const { DISCORD_TOKEN, DISCORD_CLIENT_ID } = process.env;
+new OpportunityCron().execute();
 
-if (! DISCORD_TOKEN || ! DISCORD_CLIENT_ID) {
-  throw new MissingDiscordEnvironmentError;
-}
-
-(new Bot({
-  clientId: DISCORD_CLIENT_ID,
-  token: DISCORD_TOKEN,
-})).init();
+console.log("Press CTRL-C to stop\n");
