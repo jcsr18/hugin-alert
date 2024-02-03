@@ -2,7 +2,7 @@ import { OpportunityRepository } from "@hugin-repositories/OpportunityRepository
 import { Opportunity } from "@hugin-types/Opportunity";
 import { Scraper } from "@hugin-types/Scraper";
 import { ScraperProvider } from "@hugin/providers/ScraperProvider";
-import { DiscordNotification } from "@penseapp/discord-notification";
+import { notificationsQueue } from "@hugin/utils/notificationsQueue";
 
 export class OpportunityService {
   public repository: OpportunityRepository;
@@ -12,14 +12,16 @@ export class OpportunityService {
   }
 
   public async alertNews(): Promise<Opportunity[]> {
-    const opportunities = await this.scrapAll();
-    const toRegisterOpportunities: Opportunity[] =
-      await this.repository.diff(opportunities);
+    console.log(`[${new Date().toLocaleString("pt-BR")}] Scraping...`);
 
-    toRegisterOpportunities.forEach((op: Opportunity) => {
-      this.storeOpportunity(op);
-      this.notify(op);
-    });
+    const opportunities = await this.scrapAll();
+    const news: Opportunity[] = await this.repository.diff(opportunities);
+
+    // register in database
+    news.forEach((op) => this.storeOpportunity(op));
+
+    // notify on discord webhook
+    this.notifyAll(news);
 
     return [];
   }
@@ -42,44 +44,14 @@ export class OpportunityService {
     await this.repository.storeFromScraper(opportunity);
   }
 
-  public async notify(opportunity: Opportunity) {
-    const { DISCORD_WEBHOOK } = process.env;
-    const notifyService: DiscordNotification = new DiscordNotification(
-      opportunity.provider,
-      DISCORD_WEBHOOK as string,
-    );
-
-    await notifyService
-      .infoMessage()
-      .addTitle(opportunity.title)
-      .addField({
-        name: "",
-        value: `:trophy: ${opportunity.companyName ?? "Confidencial"}`,
-        inline: false,
-      })
-      .addField({
-        name: ":cityscape: Cidade",
-        value: opportunity.cityName ?? "N/I",
-        inline: false,
-      })
-      .addField({
-        name: ":homes: Home-Office",
-        value: opportunity.isRemote ? "Sim" : "Não",
-        inline: true,
-      })
-      .addField({
-        name: ":wheelchair: PCD",
-        value: opportunity.pcdOnly ? "Sim" : "Não",
-        inline: true,
-      })
-      .addField({
-        name: ":tada: Link",
-        value: opportunity.url,
-        inline: false,
-      })
-      .addFooter(
-        `Publicada em ${opportunity.publishedAt.toLocaleString("pt-BR")}`,
-      )
-      .sendMessage();
+  public notifyAll(ops: Opportunity[]): void {
+    const now = new Date();
+    ops.forEach((op) => {
+      notificationsQueue
+        .createJob(op)
+        .delayUntil(now.setSeconds(now.getSeconds() + 1)) // workaround to discord rate limit =P
+        .retries(2)
+        .save();
+    });
   }
 }

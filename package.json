@@ -19,7 +19,9 @@
     "@penseapp/discord-notification": "^2.0.9",
     "@prisma/client": "^5.9.0",
     "axios": "^1.6.7",
+    "bee-queue": "^1.7.1",
     "dotenv": "^16.4.1",
-    "node-schedule": "^2.1.1"
+    "node-schedule": "^2.1.1",
+    "yarn": "^1.22.21"
   }
 }

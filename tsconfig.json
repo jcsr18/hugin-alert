@@ -13,27 +13,14 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@hugin-types/*": [
-        "src/types/*"
-      ],
-      "@hugin-scrappers/*": [
-        "src/scrapers/*"
-      ],
-      "@hugin-contracts/*": [
-        "src/contracts/*"
-      ],
-      "@hugin-services/*": [
-        "src/services/*"
-      ],
-      "@hugin-repositories/*": [
-        "src/repositories/*"
-      ],
-      "@hugin-crons/*": [
-        "src/crons/*"
-      ],
-      "@hugin/*": [
-        "src/*"
-      ],
+      "@hugin-types/*": ["src/types/*"],
+      "@hugin-scrappers/*": ["src/scrapers/*"],
+      "@hugin-contracts/*": ["src/contracts/*"],
+      "@hugin-services/*": ["src/services/*"],
+      "@hugin-repositories/*": ["src/repositories/*"],
+      "@hugin-crons/*": ["src/crons/*"],
+      "@hugin-jobs/*": ["src/jobs/*"],
+      "@hugin/*": ["src/*"]
     }
   }
 }

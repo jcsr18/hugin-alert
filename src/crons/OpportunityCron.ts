@@ -5,8 +5,8 @@ export class OpportunityCron {
   public execute() {
     const rule = "*/5 * * * *";
 
-    schedule.scheduleJob(rule, async function () {
-      await new OpportunityService().alertNews();
+    schedule.scheduleJob(rule, function () {
+      new OpportunityService().alertNews();
     });
   }
 }
