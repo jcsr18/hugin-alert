@@ -1,5 +1,6 @@
 Requisitos:
-Redis, sqlite e um webhook no discord
+Nodejs. yarn, Redis, sqlite e um webhook no discord
 
 Executar:
+- yarn
 - yarn dev
