@@ -6,7 +6,7 @@ export class GupyScraper extends ApiScraper {
   public async request(): Promise<AxiosResponse<any, any>> {
     return await this.api.get(this.endpoint, {
       params: {
-        jobName: "php",
+        jobName: this.search,
         limit: 10,
       },
     });

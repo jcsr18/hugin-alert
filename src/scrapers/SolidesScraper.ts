@@ -7,7 +7,7 @@ export class SolidesScraper extends ApiScraper {
     return await this.api.get(this.endpoint, {
       params: {
         page: 1,
-        title: "php",
+        title: this.search,
         take: 10,
       },
     });

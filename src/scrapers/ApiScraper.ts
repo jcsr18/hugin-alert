@@ -5,12 +5,14 @@ import axios, { AxiosInstance, AxiosResponse } from "axios";
 export abstract class ApiScraper implements ScraperApiContract {
   public baseUri: string;
   public endpoint: string;
+  public search: string;
 
   protected api: AxiosInstance;
 
-  constructor(baseUri: string, endpoint: string) {
+  constructor(baseUri: string, endpoint: string, search: string) {
     this.baseUri = baseUri;
     this.endpoint = endpoint;
+    this.search = search;
     this.api = this.createAxiosInstance();
   }
 
