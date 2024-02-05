@@ -1,0 +1,2 @@
+Requisitos:
+Redis e sqlite
