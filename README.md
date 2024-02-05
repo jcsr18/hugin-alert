@@ -1,2 +1,2 @@
 Requisitos:
-Redis e sqlite
+Redis, sqlite e um webhook no discord
